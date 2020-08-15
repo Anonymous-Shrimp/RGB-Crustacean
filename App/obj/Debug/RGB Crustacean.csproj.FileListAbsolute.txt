@@ -8,3 +8,13 @@ D:\Videos\Anonymous Shrimp\21. RGB Crustcean - Final of the RGB Series\Build\RGB
 D:\Videos\Anonymous Shrimp\21. RGB Crustcean - Final of the RGB Series\Build\RGB Crustacean\obj\Debug\RGB Crustacean.csproj.CoreCompileInputs.cache
 D:\Videos\Anonymous Shrimp\21. RGB Crustcean - Final of the RGB Series\Build\RGB Crustacean\obj\Debug\RGB Crustacean.exe
 D:\Videos\Anonymous Shrimp\21. RGB Crustcean - Final of the RGB Series\Build\RGB Crustacean\obj\Debug\RGB Crustacean.pdb
+E:\21. RGB Crustcean - Final of the RGB Series\Build\RGB-Crustacean\App\bin\Debug\RGB Crustacean.exe.config
+E:\21. RGB Crustcean - Final of the RGB Series\Build\RGB-Crustacean\App\bin\Debug\RGB Crustacean.exe
+E:\21. RGB Crustcean - Final of the RGB Series\Build\RGB-Crustacean\App\bin\Debug\RGB Crustacean.pdb
+E:\21. RGB Crustcean - Final of the RGB Series\Build\RGB-Crustacean\App\obj\Debug\RGB Crustacean.csprojAssemblyReference.cache
+E:\21. RGB Crustcean - Final of the RGB Series\Build\RGB-Crustacean\App\obj\Debug\RGB_Crustacean.Form.resources
+E:\21. RGB Crustcean - Final of the RGB Series\Build\RGB-Crustacean\App\obj\Debug\RGB_Crustacean.Properties.Resources.resources
+E:\21. RGB Crustcean - Final of the RGB Series\Build\RGB-Crustacean\App\obj\Debug\RGB Crustacean.csproj.GenerateResource.cache
+E:\21. RGB Crustcean - Final of the RGB Series\Build\RGB-Crustacean\App\obj\Debug\RGB Crustacean.csproj.CoreCompileInputs.cache
+E:\21. RGB Crustcean - Final of the RGB Series\Build\RGB-Crustacean\App\obj\Debug\RGB Crustacean.exe
+E:\21. RGB Crustcean - Final of the RGB Series\Build\RGB-Crustacean\App\obj\Debug\RGB Crustacean.pdb
