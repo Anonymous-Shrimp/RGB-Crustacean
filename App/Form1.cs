@@ -17,6 +17,7 @@ using System.IO.Ports;
 using System.IO;
 using System.Net.Http.Headers;
 
+
 namespace RGB_Crustacean
 {
     public partial class Form : System.Windows.Forms.Form
@@ -61,10 +62,11 @@ namespace RGB_Crustacean
             serialLabel1.Visible = true;
             serialLabel2.Visible = true;
             serialLabel3.Visible = true;
+            
+            serialLabel1.Text = "Device1";
+            serialLabel2.Text = "Device2";
+            serialLabel3.Text = "Device3";
 
-            serialLabel1.Text = serialText1.Text;
-            serialLabel2.Text = serialText2.Text;
-            serialLabel3.Text = serialText3.Text;
 
             foreach (string port in ports)
             {
@@ -101,8 +103,20 @@ namespace RGB_Crustacean
                 
                 device.isConnected = true;
                 device.port = new SerialPort(selectedPort, 9600, Parity.None, 8, StopBits.One);
+                device.port.Open();
+                device.port.Close();
                 device.button.Text = "Disconnect";
                 errorText.Text = "";
+                if(port == 0)
+                {
+                    serial1.Enabled = false;
+                }else if(port == 1)
+                {
+                    serial2.Enabled = false;
+                }else if(port == 2)
+                {
+                    serial3.Enabled = false;
+                }
             }
             catch
             {
@@ -115,14 +129,29 @@ namespace RGB_Crustacean
 
         private void disconnectFromArduino(int port)
         {
+            Device device = devices[port];
             try
             {
-                Device device = devices[port];
+                
                 device.isConnected = false;
+                device.port.Open();
                 device.port.Write("#STOP\n");
+                device.port.Close();
                 Console.WriteLine("#STOP\n");
                 errorText.Text = "";
                 device.button.Text = "Connect";
+                if (port == 0)
+                {
+                    serial1.Enabled = true;
+                }
+                else if (port == 1)
+                {
+                    serial2.Enabled = true;
+                }
+                else if (port == 2)
+                {
+                    serial3.Enabled = true;
+                }
             }
             catch
             {
@@ -150,12 +179,10 @@ namespace RGB_Crustacean
         {
             if (!devices[0].isConnected)
             {
-                serial1.Enabled = false;
                 connectToArduino(0);
             }
             else
             {
-                serial1.Enabled = true;
                 disconnectFromArduino(0);
             }
         }
@@ -164,12 +191,10 @@ namespace RGB_Crustacean
         {
             if (!devices[1].isConnected)
             {
-                serial2.Enabled = false;
                 connectToArduino(1);
             }
             else
             {
-                serial2.Enabled = true;
                 disconnectFromArduino(1);
             }
         }
@@ -178,35 +203,38 @@ namespace RGB_Crustacean
         {
             if (!devices[2].isConnected)
             {
-                serial3.Enabled = false;
                 connectToArduino(0);
             }
             else
             {
-                serial3.Enabled = true;
                 disconnectFromArduino(0);
             }
         }
         private void serialLabel1_Click(object sender, EventArgs e)
         {
-
+            serialText1.Visible = true;
+            serialLabel1.Visible = false;
+            serialText1.Text = serialLabel1.Text;
         }
 
         private void serialLabel2_Click(object sender, EventArgs e)
         {
-
+            serialText2.Visible = true;
+            serialLabel2.Visible = false;
+            serialText2.Text = serialLabel2.Text;
         }
         
         private void serialLabel3_Click(object sender, EventArgs e)
         {
-
+            serialText3.Visible = true;
+            serialLabel3.Visible = false;
+            serialText3.Text = serialLabel3.Text;
         }
 
         private void serialText1_TextChanged(object sender, EventArgs e)
         {
             serialLabel1.Text = serialText1.Text;
             devices[0].name = serialText2.Text;
-            saveDevices(devices[0]);
         }
 
         private void serialText2_TextChanged(object sender, EventArgs e)
@@ -230,6 +258,21 @@ namespace RGB_Crustacean
             TextWriter txt = new StreamWriter("/device.txt");
             txt.Write(device.name);
             txt.Close();
+        }
+
+        
+
+        private void Form1_Click(object sender, EventArgs e)
+        {
+
+
+            serialText1.Visible = false;
+            serialText2.Visible = false;
+            serialText3.Visible = false;
+
+            serialLabel1.Visible = true;
+            serialLabel2.Visible = true;
+            serialLabel3.Visible = true;
         }
     }
     public class Gradient

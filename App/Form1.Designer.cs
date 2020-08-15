@@ -34,6 +34,9 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.BottomPanel = new System.Windows.Forms.Panel();
             this.serialButton3 = new System.Windows.Forms.Button();
+            this.serialLabel3 = new System.Windows.Forms.Label();
+            this.serialLabel1 = new System.Windows.Forms.Label();
+            this.serialLabel2 = new System.Windows.Forms.Label();
             this.serialButton2 = new System.Windows.Forms.Button();
             this.serialButton1 = new System.Windows.Forms.Button();
             this.serialText3 = new System.Windows.Forms.TextBox();
@@ -43,9 +46,6 @@
             this.serial3 = new System.Windows.Forms.ComboBox();
             this.serial2 = new System.Windows.Forms.ComboBox();
             this.serial1 = new System.Windows.Forms.ComboBox();
-            this.serialLabel1 = new System.Windows.Forms.Label();
-            this.serialLabel2 = new System.Windows.Forms.Label();
-            this.serialLabel3 = new System.Windows.Forms.Label();
             this.Toolbar.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -54,6 +54,7 @@
             // 
             // Toolbar
             // 
+            this.Toolbar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Toolbar.Controls.Add(this.panel1);
             this.Toolbar.Dock = System.Windows.Forms.DockStyle.Left;
             this.Toolbar.Location = new System.Drawing.Point(0, 0);
@@ -68,7 +69,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(155, 61);
+            this.panel1.Size = new System.Drawing.Size(153, 61);
             this.panel1.TabIndex = 2;
             // 
             // pictureBox1
@@ -84,6 +85,7 @@
             // 
             // BottomPanel
             // 
+            this.BottomPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.BottomPanel.Controls.Add(this.serialButton3);
             this.BottomPanel.Controls.Add(this.serialLabel3);
             this.BottomPanel.Controls.Add(this.serialLabel1);
@@ -107,7 +109,7 @@
             // 
             this.serialButton3.BackColor = System.Drawing.Color.Transparent;
             this.serialButton3.Font = new System.Drawing.Font("Ubuntu", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.serialButton3.Location = new System.Drawing.Point(261, 84);
+            this.serialButton3.Location = new System.Drawing.Point(296, 84);
             this.serialButton3.Name = "serialButton3";
             this.serialButton3.Size = new System.Drawing.Size(106, 29);
             this.serialButton3.TabIndex = 10;
@@ -115,11 +117,60 @@
             this.serialButton3.UseVisualStyleBackColor = false;
             this.serialButton3.Click += new System.EventHandler(this.serialButton3_Click);
             // 
+            // serialLabel3
+            // 
+            this.serialLabel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.serialLabel3.AutoSize = true;
+            this.serialLabel3.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.serialLabel3.Location = new System.Drawing.Point(36, 87);
+            this.serialLabel3.Name = "serialLabel3";
+            this.serialLabel3.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.serialLabel3.Size = new System.Drawing.Size(63, 24);
+            this.serialLabel3.TabIndex = 12;
+            this.serialLabel3.Text = "label3";
+            this.serialLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.serialLabel3.Visible = false;
+            this.serialLabel3.Click += new System.EventHandler(this.serialLabel3_Click);
+            // 
+            // serialLabel1
+            // 
+            this.serialLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.serialLabel1.AutoSize = true;
+            this.serialLabel1.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.serialLabel1.Location = new System.Drawing.Point(36, 11);
+            this.serialLabel1.Name = "serialLabel1";
+            this.serialLabel1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.serialLabel1.Size = new System.Drawing.Size(63, 24);
+            this.serialLabel1.TabIndex = 2;
+            this.serialLabel1.Text = "label1";
+            this.serialLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.serialLabel1.Click += new System.EventHandler(this.serialLabel1_Click);
+            // 
+            // serialLabel2
+            // 
+            this.serialLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.serialLabel2.AutoSize = true;
+            this.serialLabel2.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.serialLabel2.Location = new System.Drawing.Point(36, 49);
+            this.serialLabel2.Name = "serialLabel2";
+            this.serialLabel2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.serialLabel2.Size = new System.Drawing.Size(63, 24);
+            this.serialLabel2.TabIndex = 11;
+            this.serialLabel2.Text = "label2";
+            this.serialLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.serialLabel2.Click += new System.EventHandler(this.serialLabel2_Click);
+            // 
             // serialButton2
             // 
             this.serialButton2.BackColor = System.Drawing.Color.Transparent;
             this.serialButton2.Font = new System.Drawing.Font("Ubuntu", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.serialButton2.Location = new System.Drawing.Point(261, 46);
+            this.serialButton2.Location = new System.Drawing.Point(296, 46);
             this.serialButton2.Name = "serialButton2";
             this.serialButton2.Size = new System.Drawing.Size(106, 29);
             this.serialButton2.TabIndex = 9;
@@ -131,7 +182,7 @@
             // 
             this.serialButton1.BackColor = System.Drawing.Color.Transparent;
             this.serialButton1.Font = new System.Drawing.Font("Ubuntu", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.serialButton1.Location = new System.Drawing.Point(261, 8);
+            this.serialButton1.Location = new System.Drawing.Point(296, 8);
             this.serialButton1.Name = "serialButton1";
             this.serialButton1.Size = new System.Drawing.Size(106, 29);
             this.serialButton1.TabIndex = 8;
@@ -141,26 +192,32 @@
             // 
             // serialText3
             // 
-            this.serialText3.Location = new System.Drawing.Point(19, 87);
+            this.serialText3.Location = new System.Drawing.Point(19, 84);
+            this.serialText3.MaxLength = 10;
             this.serialText3.Name = "serialText3";
             this.serialText3.Size = new System.Drawing.Size(100, 29);
             this.serialText3.TabIndex = 7;
+            this.serialText3.Text = "Device3";
             this.serialText3.TextChanged += new System.EventHandler(this.serialText3_TextChanged);
             // 
             // serialText2
             // 
             this.serialText2.Location = new System.Drawing.Point(19, 46);
+            this.serialText2.MaxLength = 10;
             this.serialText2.Name = "serialText2";
             this.serialText2.Size = new System.Drawing.Size(100, 29);
             this.serialText2.TabIndex = 6;
+            this.serialText2.Text = "Device2";
             this.serialText2.TextChanged += new System.EventHandler(this.serialText2_TextChanged);
             // 
             // serialText1
             // 
             this.serialText1.Location = new System.Drawing.Point(19, 8);
+            this.serialText1.MaxLength = 10;
             this.serialText1.Name = "serialText1";
             this.serialText1.Size = new System.Drawing.Size(100, 29);
             this.serialText1.TabIndex = 5;
+            this.serialText1.Text = "Device1";
             this.serialText1.TextChanged += new System.EventHandler(this.serialText1_TextChanged);
             // 
             // errorText
@@ -179,7 +236,7 @@
             // serial3
             // 
             this.serial3.FormattingEnabled = true;
-            this.serial3.Location = new System.Drawing.Point(134, 84);
+            this.serial3.Location = new System.Drawing.Point(169, 84);
             this.serial3.Name = "serial3";
             this.serial3.Size = new System.Drawing.Size(121, 32);
             this.serial3.TabIndex = 2;
@@ -188,7 +245,7 @@
             // serial2
             // 
             this.serial2.FormattingEnabled = true;
-            this.serial2.Location = new System.Drawing.Point(134, 46);
+            this.serial2.Location = new System.Drawing.Point(169, 46);
             this.serial2.Name = "serial2";
             this.serial2.Size = new System.Drawing.Size(121, 32);
             this.serial2.TabIndex = 1;
@@ -197,42 +254,11 @@
             // serial1
             // 
             this.serial1.FormattingEnabled = true;
-            this.serial1.Location = new System.Drawing.Point(134, 8);
+            this.serial1.Location = new System.Drawing.Point(169, 8);
             this.serial1.Name = "serial1";
             this.serial1.Size = new System.Drawing.Size(121, 32);
             this.serial1.TabIndex = 0;
             this.serial1.SelectedIndexChanged += new System.EventHandler(this.serial1_SelectedIndexChanged);
-            // 
-            // serialLabel1
-            // 
-            this.serialLabel1.AutoSize = true;
-            this.serialLabel1.Location = new System.Drawing.Point(36, 11);
-            this.serialLabel1.Name = "serialLabel1";
-            this.serialLabel1.Size = new System.Drawing.Size(63, 24);
-            this.serialLabel1.TabIndex = 2;
-            this.serialLabel1.Text = "label1";
-            this.serialLabel1.Click += new System.EventHandler(this.serialLabel1_Click);
-            // 
-            // serialLabel2
-            // 
-            this.serialLabel2.AutoSize = true;
-            this.serialLabel2.Location = new System.Drawing.Point(36, 49);
-            this.serialLabel2.Name = "serialLabel2";
-            this.serialLabel2.Size = new System.Drawing.Size(63, 24);
-            this.serialLabel2.TabIndex = 11;
-            this.serialLabel2.Text = "label2";
-            this.serialLabel2.Click += new System.EventHandler(this.serialLabel2_Click);
-            // 
-            // serialLabel3
-            // 
-            this.serialLabel3.AutoSize = true;
-            this.serialLabel3.Location = new System.Drawing.Point(36, 90);
-            this.serialLabel3.Name = "serialLabel3";
-            this.serialLabel3.Size = new System.Drawing.Size(63, 24);
-            this.serialLabel3.TabIndex = 12;
-            this.serialLabel3.Text = "label3";
-            this.serialLabel3.Visible = false;
-            this.serialLabel3.Click += new System.EventHandler(this.serialLabel3_Click);
             // 
             // Form
             // 
@@ -246,8 +272,10 @@
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(100)))), ((int)(((byte)(117)))));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "Form";
             this.Text = "RGB Crustacean";
+            this.Click += new System.EventHandler(this.Form1_Click);
             this.Toolbar.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
