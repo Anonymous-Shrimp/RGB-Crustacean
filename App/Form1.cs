@@ -12,11 +12,17 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Text;
+using System.Linq;
+using System.Dynamic;
+using System.Configuration;
+using System.Xml;
+using System.Threading;
 using System.Windows.Forms;
 using System.IO.Ports;
 using System.IO;
+using System.Drawing.Drawing2D;
 using System.Net.Http.Headers;
-
+using System.Diagnostics;
 
 namespace RGB_Crustacean
 {
@@ -25,13 +31,20 @@ namespace RGB_Crustacean
         String[] ports;
         Device[] devices = { new Device(), new Device(), new Device() };
 
-        Gradient[] palettes;
+        List<Gradient> palettes;
+        Gradient[] startPalettes = new Gradient[] { new Gradient() };
 
-        
+        int index = 0;
+
         public Form()
         {
             InitializeComponent();
             getAvailableComPorts();
+
+            if(palettes == null)
+            {
+                palettes = startPalettes.ToList();
+            }
 
             errorText.Text = "";
 
@@ -67,6 +80,15 @@ namespace RGB_Crustacean
             serialLabel2.Text = "Device2";
             serialLabel3.Text = "Device3";
 
+            gradientName.Visible = true;
+            gradientText.Visible = false;
+
+            gradientName.Text = palettes[index].name;
+
+            foreach (Gradient g in palettes)
+            {
+                gradientList.Items.Add(g.name);
+            }
 
             foreach (string port in ports)
             {
@@ -81,7 +103,10 @@ namespace RGB_Crustacean
                     serial3.SelectedItem = ports[0];
                 }
             }
-            
+            updateList();
+            GradientBox.Paint += new PaintEventHandler(this.GradientBox_Paint);
+            this.Controls.Add(GradientBox);
+
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -160,6 +185,8 @@ namespace RGB_Crustacean
             }
         }
 
+        
+
         private void serial1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -185,6 +212,11 @@ namespace RGB_Crustacean
             {
                 disconnectFromArduino(0);
             }
+        }
+
+        void MainFormPaint(object sender, PaintEventArgs e)
+        {
+            
         }
 
         private void serialButton2_Click(object sender, EventArgs e)
@@ -253,12 +285,7 @@ namespace RGB_Crustacean
         {
             errorText.Text = "";
         }
-        void saveDevices(Device device)
-        {
-            TextWriter txt = new StreamWriter("/device.txt");
-            txt.Write(device.name);
-            txt.Close();
-        }
+        
 
         
 
@@ -269,17 +296,124 @@ namespace RGB_Crustacean
             serialText1.Visible = false;
             serialText2.Visible = false;
             serialText3.Visible = false;
+            gradientText.Visible = false;
 
             serialLabel1.Visible = true;
             serialLabel2.Visible = true;
             serialLabel3.Visible = true;
+            gradientName.Visible = true;
+        }
+
+        private void GradientBox_Paint(object sender, PaintEventArgs e)
+        {
+            LinearGradientBrush br = new LinearGradientBrush(GradientBox.DisplayRectangle, Color.Black, Color.Black, 0, false);
+            ColorBlend cb = new ColorBlend();
+            try
+            {
+                cb.Positions = palettes[gradientList.SelectedIndex].pos;
+                cb.Colors = palettes[gradientList.SelectedIndex].color;
+            }
+            catch
+            {
+                cb.Positions = palettes[0].pos;
+                cb.Colors = palettes[0].color;
+                Console.WriteLine("Error Drawing Gradient");
+            }
+            br.InterpolationColors = cb;
+            br.RotateTransform(0);
+            e.Graphics.FillRectangle(br, GradientBox.DisplayRectangle);
+
+            gradientName.Text = palettes[index].name;
+        }
+
+        void updateColorPage()
+        {
+
+    }
+
+        private void gradientList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            index = gradientList.SelectedIndex;
+            updateColorPage();
+        }
+
+        private void AddGradient_Click(object sender, EventArgs e)
+        {
+            palettes.Add(new Gradient());
+            updateList();
+            gradientList.SelectedIndex = palettes.Count - 1;
+        }
+        void updateList()
+        {
+            object i = gradientList.SelectedItem;
+
+            gradientList.Items.Clear();
+
+            foreach(Gradient g in palettes)
+            {
+                gradientList.Items.Add(g.name);
+            }
+
+            gradientList.SelectedItem = i;
+            
+        }
+
+
+       
+
+        private void deleteList_Click(object sender, EventArgs e)
+        {
+            palettes.RemoveAt(gradientList.SelectedIndex);
+            gradientList.SelectedIndex = 0;
+            updateList();
+        }
+
+        private void duplicateList_Click(object sender, EventArgs e)
+        {
+            palettes.Add(palettes[gradientList.SelectedIndex]);
+            
+            updateList();
+            gradientList.SelectedIndex = palettes.Count - 1;
+        }
+
+        private void listContextMenu_Opened(object sender, EventArgs e)
+        {
+            deleteList.Enabled = gradientList.SelectedItem != null;
+            duplicateList.Enabled = gradientList.SelectedItem != null;
+            if (gradientList.Items.Count == 1)
+            {
+                deleteList.Enabled = false;
+            }
+            else
+            {
+                deleteList.Enabled = true;
+            }
+           
+        }
+
+        
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            gradientName.Text = gradientText.Text;
+            palettes[index].name = gradientText.Text;
+            updateList();
+        }
+
+        private void gradientName_Click(object sender, EventArgs e)
+        {
+            gradientText.Visible = true;
+            gradientName.Visible = false;
+            gradientText.Text = gradientName.Text;
         }
     }
+
     public class Gradient
     {
-        public string name;
-        public Color[] color;
-        public int[] pos;
+        public string name = "MyGradient";
+        public Color[] color = { Color.Black, Color.White};
+        public float[] pos = { 0, 1 };
+
+        
     }
     public class Device
     {

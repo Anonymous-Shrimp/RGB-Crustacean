@@ -28,8 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form));
             this.Toolbar = new System.Windows.Forms.Panel();
+            this.AddGradient = new System.Windows.Forms.Button();
+            this.gradientList = new System.Windows.Forms.ListBox();
+            this.listContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.duplicateList = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteList = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.BottomPanel = new System.Windows.Forms.Panel();
@@ -46,7 +52,11 @@
             this.serial3 = new System.Windows.Forms.ComboBox();
             this.serial2 = new System.Windows.Forms.ComboBox();
             this.serial1 = new System.Windows.Forms.ComboBox();
+            this.GradientBox = new System.Windows.Forms.Panel();
+            this.gradientName = new System.Windows.Forms.Label();
+            this.gradientText = new System.Windows.Forms.TextBox();
             this.Toolbar.SuspendLayout();
+            this.listContextMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.BottomPanel.SuspendLayout();
@@ -55,12 +65,61 @@
             // Toolbar
             // 
             this.Toolbar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Toolbar.Controls.Add(this.AddGradient);
+            this.Toolbar.Controls.Add(this.gradientList);
             this.Toolbar.Controls.Add(this.panel1);
             this.Toolbar.Dock = System.Windows.Forms.DockStyle.Left;
             this.Toolbar.Location = new System.Drawing.Point(0, 0);
             this.Toolbar.Name = "Toolbar";
             this.Toolbar.Size = new System.Drawing.Size(155, 450);
             this.Toolbar.TabIndex = 0;
+            // 
+            // AddGradient
+            // 
+            this.AddGradient.BackColor = System.Drawing.Color.Transparent;
+            this.AddGradient.Font = new System.Drawing.Font("Ubuntu", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AddGradient.Location = new System.Drawing.Point(11, 408);
+            this.AddGradient.Name = "AddGradient";
+            this.AddGradient.Size = new System.Drawing.Size(120, 29);
+            this.AddGradient.TabIndex = 13;
+            this.AddGradient.Text = "Add Gradient";
+            this.AddGradient.UseVisualStyleBackColor = false;
+            this.AddGradient.Click += new System.EventHandler(this.AddGradient_Click);
+            // 
+            // gradientList
+            // 
+            this.gradientList.ContextMenuStrip = this.listContextMenu;
+            this.gradientList.Font = new System.Drawing.Font("Ubuntu", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gradientList.FormattingEnabled = true;
+            this.gradientList.ItemHeight = 17;
+            this.gradientList.Location = new System.Drawing.Point(11, 67);
+            this.gradientList.Name = "gradientList";
+            this.gradientList.Size = new System.Drawing.Size(120, 327);
+            this.gradientList.TabIndex = 0;
+            this.gradientList.SelectedIndexChanged += new System.EventHandler(this.gradientList_SelectedIndexChanged);
+            // 
+            // listContextMenu
+            // 
+            this.listContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.duplicateList,
+            this.deleteList});
+            this.listContextMenu.Name = "listContextMenu";
+            this.listContextMenu.Size = new System.Drawing.Size(125, 48);
+            this.listContextMenu.Opened += new System.EventHandler(this.listContextMenu_Opened);
+            // 
+            // duplicateList
+            // 
+            this.duplicateList.Name = "duplicateList";
+            this.duplicateList.Size = new System.Drawing.Size(124, 22);
+            this.duplicateList.Text = "Duplicate";
+            this.duplicateList.Click += new System.EventHandler(this.duplicateList_Click);
+            // 
+            // deleteList
+            // 
+            this.deleteList.Name = "deleteList";
+            this.deleteList.Size = new System.Drawing.Size(124, 22);
+            this.deleteList.Text = "Delete";
+            this.deleteList.Click += new System.EventHandler(this.deleteList_Click);
             // 
             // panel1
             // 
@@ -260,12 +319,49 @@
             this.serial1.TabIndex = 0;
             this.serial1.SelectedIndexChanged += new System.EventHandler(this.serial1_SelectedIndexChanged);
             // 
+            // GradientBox
+            // 
+            this.GradientBox.Location = new System.Drawing.Point(160, 12);
+            this.GradientBox.Name = "GradientBox";
+            this.GradientBox.Size = new System.Drawing.Size(628, 100);
+            this.GradientBox.TabIndex = 2;
+            this.GradientBox.Paint += new System.Windows.Forms.PaintEventHandler(this.GradientBox_Paint);
+            // 
+            // gradientName
+            // 
+            this.gradientName.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gradientName.AutoSize = true;
+            this.gradientName.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.gradientName.Location = new System.Drawing.Point(175, 121);
+            this.gradientName.Name = "gradientName";
+            this.gradientName.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.gradientName.Size = new System.Drawing.Size(134, 24);
+            this.gradientName.TabIndex = 13;
+            this.gradientName.Text = "gradientName";
+            this.gradientName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.gradientName.Click += new System.EventHandler(this.gradientName_Click);
+            // 
+            // gradientText
+            // 
+            this.gradientText.Location = new System.Drawing.Point(161, 118);
+            this.gradientText.MaxLength = 10;
+            this.gradientText.Name = "gradientText";
+            this.gradientText.Size = new System.Drawing.Size(100, 29);
+            this.gradientText.TabIndex = 13;
+            this.gradientText.Text = "gradientText";
+            this.gradientText.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
             // Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(44)))), ((int)(((byte)(54)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.gradientText);
+            this.Controls.Add(this.gradientName);
+            this.Controls.Add(this.GradientBox);
             this.Controls.Add(this.BottomPanel);
             this.Controls.Add(this.Toolbar);
             this.Font = new System.Drawing.Font("Ubuntu", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -277,11 +373,13 @@
             this.Text = "RGB Crustacean";
             this.Click += new System.EventHandler(this.Form1_Click);
             this.Toolbar.ResumeLayout(false);
+            this.listContextMenu.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.BottomPanel.ResumeLayout(false);
             this.BottomPanel.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -304,6 +402,14 @@
         private System.Windows.Forms.Label serialLabel1;
         private System.Windows.Forms.Label serialLabel2;
         private System.Windows.Forms.Label serialLabel3;
+        private System.Windows.Forms.Panel GradientBox;
+        private System.Windows.Forms.ListBox gradientList;
+        private System.Windows.Forms.Button AddGradient;
+        private System.Windows.Forms.ContextMenuStrip listContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem duplicateList;
+        private System.Windows.Forms.ToolStripMenuItem deleteList;
+        private System.Windows.Forms.Label gradientName;
+        private System.Windows.Forms.TextBox gradientText;
     }
 }
 
