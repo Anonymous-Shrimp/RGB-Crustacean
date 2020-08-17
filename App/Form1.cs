@@ -31,6 +31,8 @@ namespace RGB_Crustacean
         String[] ports;
         Device[] devices = { new Device(), new Device(), new Device() };
 
+        PaintEventArgs draw;
+
         List<Gradient> palettes;
         Gradient[] startPalettes = new Gradient[] { new Gradient() };
 
@@ -306,6 +308,7 @@ namespace RGB_Crustacean
 
         private void GradientBox_Paint(object sender, PaintEventArgs e)
         {
+            draw = e;
             LinearGradientBrush br = new LinearGradientBrush(GradientBox.DisplayRectangle, Color.Black, Color.Black, 0, false);
             ColorBlend cb = new ColorBlend();
             try
@@ -323,18 +326,47 @@ namespace RGB_Crustacean
             br.RotateTransform(0);
             e.Graphics.FillRectangle(br, GradientBox.DisplayRectangle);
 
-            gradientName.Text = palettes[index].name;
         }
 
         void updateColorPage()
         {
+            /*
+            LinearGradientBrush br = new LinearGradientBrush(GradientBox.DisplayRectangle, Color.Black, Color.Black, 0, false);
+            ColorBlend cb = new ColorBlend();
+            try
+            {
+                cb.Positions = palettes[gradientList.SelectedIndex].pos;
+                cb.Colors = palettes[gradientList.SelectedIndex].color;
+            }
+            catch
+            {
+                cb.Positions = palettes[0].pos;
+                cb.Colors = palettes[0].color;
+                Console.WriteLine("Error Drawing Gradient");
+            }
+            br.InterpolationColors = cb;
+            br.RotateTransform(0);
+            draw.Graphics.FillRectangle(br, GradientBox.DisplayRectangle);
+            */
 
-    }
+            r.Value = palettes[index].color[0].R;
+            g.Value = palettes[index].color[0].G;
+            b.Value = palettes[index].color[0].B;
+            gradientName.Text = palettes[index].name;
+        }
 
         private void gradientList_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (gradientText.Visible)
+            {
+                gradientText.Visible = false;
+                gradientName.Visible = true;
+                gradientName.Text = gradientText.Text;
+                palettes[index].name = gradientText.Text;
+            }
             index = gradientList.SelectedIndex;
             updateColorPage();
+            updateList();
         }
 
         private void AddGradient_Click(object sender, EventArgs e)
@@ -353,9 +385,9 @@ namespace RGB_Crustacean
             {
                 gradientList.Items.Add(g.name);
             }
-
             gradientList.SelectedItem = i;
             
+
         }
 
 
@@ -405,6 +437,21 @@ namespace RGB_Crustacean
             gradientName.Visible = false;
             gradientText.Text = gradientName.Text;
         }
+
+        private void r_Scroll(object sender, EventArgs e)
+        {
+            palettes[index].color[0] = Color.FromArgb(r.Value, g.Value, b.Value);
+        }
+
+        private void g_Scroll(object sender, EventArgs e)
+        {
+            palettes[index].color[0] = Color.FromArgb(r.Value, g.Value, b.Value);
+        }
+
+        private void b_Scroll(object sender, EventArgs e)
+        {
+            palettes[index].color[0] = Color.FromArgb(r.Value, g.Value, b.Value);
+        }
     }
 
     public class Gradient
@@ -423,8 +470,6 @@ namespace RGB_Crustacean
         public Button button;
         public TextBox nameBox;
         public ComboBox selection;
-        
-
     }
     
 }

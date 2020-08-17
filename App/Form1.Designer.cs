@@ -55,11 +55,18 @@
             this.GradientBox = new System.Windows.Forms.Panel();
             this.gradientName = new System.Windows.Forms.Label();
             this.gradientText = new System.Windows.Forms.TextBox();
+            this.process1 = new System.Diagnostics.Process();
+            this.r = new System.Windows.Forms.TrackBar();
+            this.g = new System.Windows.Forms.TrackBar();
+            this.b = new System.Windows.Forms.TrackBar();
             this.Toolbar.SuspendLayout();
             this.listContextMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.BottomPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.r)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.g)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.b)).BeginInit();
             this.SuspendLayout();
             // 
             // Toolbar
@@ -334,7 +341,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gradientName.AutoSize = true;
             this.gradientName.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.gradientName.Location = new System.Drawing.Point(175, 121);
+            this.gradientName.Location = new System.Drawing.Point(161, 125);
             this.gradientName.Name = "gradientName";
             this.gradientName.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.gradientName.Size = new System.Drawing.Size(134, 24);
@@ -345,7 +352,7 @@
             // 
             // gradientText
             // 
-            this.gradientText.Location = new System.Drawing.Point(161, 118);
+            this.gradientText.Location = new System.Drawing.Point(160, 122);
             this.gradientText.MaxLength = 10;
             this.gradientText.Name = "gradientText";
             this.gradientText.Size = new System.Drawing.Size(100, 29);
@@ -353,12 +360,58 @@
             this.gradientText.Text = "gradientText";
             this.gradientText.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
+            // process1
+            // 
+            this.process1.StartInfo.Domain = "";
+            this.process1.StartInfo.LoadUserProfile = false;
+            this.process1.StartInfo.Password = null;
+            this.process1.StartInfo.StandardErrorEncoding = null;
+            this.process1.StartInfo.StandardOutputEncoding = null;
+            this.process1.StartInfo.UserName = "";
+            this.process1.SynchronizingObject = this;
+            // 
+            // r
+            // 
+            this.r.Location = new System.Drawing.Point(641, 118);
+            this.r.Maximum = 255;
+            this.r.Name = "r";
+            this.r.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.r.Size = new System.Drawing.Size(45, 174);
+            this.r.TabIndex = 14;
+            this.r.TickFrequency = 5;
+            this.r.Scroll += new System.EventHandler(this.r_Scroll);
+            // 
+            // g
+            // 
+            this.g.Location = new System.Drawing.Point(692, 118);
+            this.g.Maximum = 255;
+            this.g.Name = "g";
+            this.g.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.g.Size = new System.Drawing.Size(45, 174);
+            this.g.TabIndex = 15;
+            this.g.TickFrequency = 5;
+            this.g.Scroll += new System.EventHandler(this.g_Scroll);
+            // 
+            // b
+            // 
+            this.b.Location = new System.Drawing.Point(743, 118);
+            this.b.Maximum = 255;
+            this.b.Name = "b";
+            this.b.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.b.Size = new System.Drawing.Size(45, 174);
+            this.b.TabIndex = 16;
+            this.b.TickFrequency = 5;
+            this.b.Scroll += new System.EventHandler(this.b_Scroll);
+            // 
             // Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(44)))), ((int)(((byte)(54)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.b);
+            this.Controls.Add(this.g);
+            this.Controls.Add(this.r);
             this.Controls.Add(this.gradientText);
             this.Controls.Add(this.gradientName);
             this.Controls.Add(this.GradientBox);
@@ -378,6 +431,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.BottomPanel.ResumeLayout(false);
             this.BottomPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.r)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.g)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.b)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -410,6 +466,10 @@
         private System.Windows.Forms.ToolStripMenuItem deleteList;
         private System.Windows.Forms.Label gradientName;
         private System.Windows.Forms.TextBox gradientText;
+        private System.Diagnostics.Process process1;
+        private System.Windows.Forms.TrackBar b;
+        private System.Windows.Forms.TrackBar g;
+        private System.Windows.Forms.TrackBar r;
     }
 }
 
