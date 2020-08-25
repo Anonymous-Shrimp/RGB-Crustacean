@@ -23,28 +23,24 @@ using System.IO;
 using System.Drawing.Drawing2D;
 using System.Net.Http.Headers;
 using System.Diagnostics;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace RGB_Crustacean
 {
     public partial class Form : System.Windows.Forms.Form
     {
         String[] ports;
-        Device[] devices = { new Device(), new Device(), new Device() };
-
-        PaintEventArgs draw;
-
-       Gradient palettes;
-        Gradient startPalettes;
-
-        int index = 0;
-
+        public Device[] devices = { new Device(), new Device(), new Device() };
+        public FolderBrowserDialog fbd;
+        public Gradient palettes;
         public Form()
         {
             InitializeComponent();
             getAvailableComPorts();
 
-            errorText.Text = "";
+            fbd = dataPath;
 
+            errorText.Text = "";
             devices[0].button = serialButton1;
             devices[1].button = serialButton2;
             devices[2].button = serialButton3;
@@ -291,7 +287,6 @@ namespace RGB_Crustacean
 
         private void GradientBox_Paint(object sender, PaintEventArgs e)
         {
-            draw = e;
             LinearGradientBrush br = new LinearGradientBrush(GradientBox.DisplayRectangle, Color.Black, Color.Black, 0, false);
             ColorBlend cb = new ColorBlend();
             try
@@ -345,6 +340,19 @@ namespace RGB_Crustacean
         {
 
         }
+        public void SavePlayer()
+        {
+            SaveSystem.SavePlayer(this);
+            SaveDeviceSystem.SavePlayer(this);
+        }
+        public void LoadPlayer()
+        {
+            SaveData data = SaveSystem.LoadPlayer(this);
+            SaveDevice device = SaveDeviceSystem.LoadPlayer(this);
+
+            palettes = data.palettes;
+            devices = device.devices;
+        }
     }
 
     public class Gradient
@@ -365,4 +373,105 @@ namespace RGB_Crustacean
         public ComboBox selection;
     }
     
+
+public static class SaveSystem
+    {
+        public static void SavePlayer(Form save)
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+
+            
+            string path = save.fbd.SelectedPath + "/RGBCrustacean.col";
+            FileStream stream = new FileStream(path, FileMode.Create);
+
+            SaveData data = new SaveData(save);
+
+            formatter.Serialize(stream, data);
+            stream.Close();
+        }
+        public static SaveData LoadPlayer(Form save)
+        {
+            string path = save.fbd.SelectedPath + "/RGBCrustacean.col";
+            if (File.Exists(path))
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                FileStream stream = new FileStream(path, FileMode.Open);
+
+                SaveData data = formatter.Deserialize(stream) as SaveData;
+
+                stream.Close();
+
+                Console.WriteLine("Loaded File From " + path);
+
+                return data;
+            }
+            else
+            {
+                Console.WriteLine("Save File not found in " + path);
+                return null;
+            }
+        }
+    }
+    public static class SaveDeviceSystem
+    {
+        public static void SavePlayer(Form save)
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+
+            string path = save.fbd.SelectedPath + "/RGBCrustacean.col";
+            FileStream stream = new FileStream(path, FileMode.Create);
+
+            SaveDevice data = new SaveDevice(save);
+
+            formatter.Serialize(stream, data);
+            stream.Close();
+        }
+        public static SaveDevice LoadPlayer(Form save)
+        {
+            string path = save.fbd.SelectedPath + "/RGBCrustacean.col";
+            if (File.Exists(path))
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                FileStream stream = new FileStream(path, FileMode.Open);
+
+                SaveDevice data = formatter.Deserialize(stream) as SaveDevice;
+
+                stream.Close();
+
+                Console.WriteLine("Loaded File From " + path);
+
+                return data;
+            }
+            else
+            {
+                Console.WriteLine("Save File not found in " + path);
+                return null;
+            }
+        }
+    }
+    public class SaveData
+    {
+
+        public Gradient palettes;
+        public Device[] devices;
+
+        public SaveData(Form save)
+        {
+            palettes = save.palettes;
+        }
+
+    }
+    public class SaveDevice
+    {
+
+        public Gradient palettes;
+        public Device[] devices;
+
+        public SaveDevice(Form save)
+        {
+            devices = save.devices;
+        }
+
+    }
 }
+

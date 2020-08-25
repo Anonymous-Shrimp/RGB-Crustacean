@@ -1,4 +1,12 @@
-﻿using System;
+﻿
+/*
+By Anonymous Shrimp
+https://youtube.com/channel/UCs2Sz1gPlWAdET5qcLcZCJw
+https://github.com/Anonymous-Shrimp 
+*/
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

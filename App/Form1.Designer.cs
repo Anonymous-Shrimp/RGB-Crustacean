@@ -1,4 +1,12 @@
-﻿namespace RGB_Crustacean
+﻿
+/*
+By Anonymous Shrimp
+https://youtube.com/channel/UCs2Sz1gPlWAdET5qcLcZCJw
+https://github.com/Anonymous-Shrimp 
+*/
+
+
+namespace RGB_Crustacean
 {
     partial class Form
     {
@@ -45,17 +53,18 @@
             this.serial2 = new System.Windows.Forms.ComboBox();
             this.serial1 = new System.Windows.Forms.ComboBox();
             this.GradientBox = new System.Windows.Forms.Panel();
+            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.resetGradientToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.process1 = new System.Diagnostics.Process();
             this.r = new System.Windows.Forms.TrackBar();
             this.g = new System.Windows.Forms.TrackBar();
             this.b = new System.Windows.Forms.TrackBar();
-            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.resetGradientToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataPath = new System.Windows.Forms.FolderBrowserDialog();
             this.BottomPanel.SuspendLayout();
+            this.contextMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.r)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.g)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.b)).BeginInit();
-            this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // BottomPanel
@@ -244,6 +253,22 @@
             this.GradientBox.TabIndex = 2;
             this.GradientBox.Paint += new System.Windows.Forms.PaintEventHandler(this.GradientBox_Paint);
             // 
+            // contextMenuStrip
+            // 
+            this.contextMenuStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.resetGradientToolStripMenuItem});
+            this.contextMenuStrip.Name = "contextMenuStrip";
+            this.contextMenuStrip.Size = new System.Drawing.Size(199, 36);
+            this.contextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip_Opening);
+            // 
+            // resetGradientToolStripMenuItem
+            // 
+            this.resetGradientToolStripMenuItem.Name = "resetGradientToolStripMenuItem";
+            this.resetGradientToolStripMenuItem.Size = new System.Drawing.Size(198, 32);
+            this.resetGradientToolStripMenuItem.Text = "Reset Gradient";
+            this.resetGradientToolStripMenuItem.Click += new System.EventHandler(this.resetGradientToolStripMenuItem_Click);
+            // 
             // process1
             // 
             this.process1.StartInfo.Domain = "";
@@ -287,22 +312,6 @@
             this.b.TickFrequency = 5;
             this.b.Scroll += new System.EventHandler(this.b_Scroll);
             // 
-            // contextMenuStrip
-            // 
-            this.contextMenuStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.resetGradientToolStripMenuItem});
-            this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(199, 36);
-            this.contextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip_Opening);
-            // 
-            // resetGradientToolStripMenuItem
-            // 
-            this.resetGradientToolStripMenuItem.Name = "resetGradientToolStripMenuItem";
-            this.resetGradientToolStripMenuItem.Size = new System.Drawing.Size(198, 32);
-            this.resetGradientToolStripMenuItem.Text = "Reset Gradient";
-            this.resetGradientToolStripMenuItem.Click += new System.EventHandler(this.resetGradientToolStripMenuItem_Click);
-            // 
             // Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(17F, 34F);
@@ -324,10 +333,10 @@
             this.Click += new System.EventHandler(this.Form1_Click);
             this.BottomPanel.ResumeLayout(false);
             this.BottomPanel.PerformLayout();
+            this.contextMenuStrip.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.r)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.g)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.b)).EndInit();
-            this.contextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -355,6 +364,7 @@
         private System.Windows.Forms.TrackBar r;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem resetGradientToolStripMenuItem;
+        private System.Windows.Forms.FolderBrowserDialog dataPath;
     }
 }
 
