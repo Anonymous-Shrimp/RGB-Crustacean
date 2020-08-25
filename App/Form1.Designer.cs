@@ -39,6 +39,8 @@ namespace RGB_Crustacean
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form));
             this.BottomPanel = new System.Windows.Forms.Panel();
+            this.dataPathText = new System.Windows.Forms.Label();
+            this.browseData = new System.Windows.Forms.Button();
             this.serialButton3 = new System.Windows.Forms.Button();
             this.serialLabel3 = new System.Windows.Forms.Label();
             this.serialLabel1 = new System.Windows.Forms.Label();
@@ -60,6 +62,7 @@ namespace RGB_Crustacean
             this.g = new System.Windows.Forms.TrackBar();
             this.b = new System.Windows.Forms.TrackBar();
             this.dataPath = new System.Windows.Forms.FolderBrowserDialog();
+            this.refresh = new System.Windows.Forms.Button();
             this.BottomPanel.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.r)).BeginInit();
@@ -70,6 +73,9 @@ namespace RGB_Crustacean
             // BottomPanel
             // 
             this.BottomPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.BottomPanel.Controls.Add(this.refresh);
+            this.BottomPanel.Controls.Add(this.dataPathText);
+            this.BottomPanel.Controls.Add(this.browseData);
             this.BottomPanel.Controls.Add(this.serialButton3);
             this.BottomPanel.Controls.Add(this.serialLabel3);
             this.BottomPanel.Controls.Add(this.serialLabel1);
@@ -88,6 +94,31 @@ namespace RGB_Crustacean
             this.BottomPanel.Name = "BottomPanel";
             this.BottomPanel.Size = new System.Drawing.Size(800, 148);
             this.BottomPanel.TabIndex = 1;
+            // 
+            // dataPathText
+            // 
+            this.dataPathText.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.dataPathText.AutoSize = true;
+            this.dataPathText.Font = new System.Drawing.Font("Ubuntu", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataPathText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(100)))), ((int)(((byte)(117)))));
+            this.dataPathText.Location = new System.Drawing.Point(439, 103);
+            this.dataPathText.Name = "dataPathText";
+            this.dataPathText.Size = new System.Drawing.Size(117, 21);
+            this.dataPathText.TabIndex = 15;
+            this.dataPathText.Text = "dataPathText";
+            this.dataPathText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // browseData
+            // 
+            this.browseData.BackColor = System.Drawing.Color.Transparent;
+            this.browseData.Font = new System.Drawing.Font("Ubuntu", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.browseData.Location = new System.Drawing.Point(614, 59);
+            this.browseData.Name = "browseData";
+            this.browseData.Size = new System.Drawing.Size(124, 29);
+            this.browseData.TabIndex = 14;
+            this.browseData.Text = "Data Path";
+            this.browseData.UseVisualStyleBackColor = false;
+            this.browseData.Click += new System.EventHandler(this.browseData_Click);
             // 
             // serialButton3
             // 
@@ -312,6 +343,22 @@ namespace RGB_Crustacean
             this.b.TickFrequency = 5;
             this.b.Scroll += new System.EventHandler(this.b_Scroll);
             // 
+            // dataPath
+            // 
+            this.dataPath.Description = "The folder in which the device and gradient data is stored";
+            // 
+            // refresh
+            // 
+            this.refresh.BackColor = System.Drawing.Color.Transparent;
+            this.refresh.Font = new System.Drawing.Font("Ubuntu", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.refresh.Location = new System.Drawing.Point(614, 17);
+            this.refresh.Name = "refresh";
+            this.refresh.Size = new System.Drawing.Size(124, 29);
+            this.refresh.TabIndex = 16;
+            this.refresh.Text = "Refresh";
+            this.refresh.UseVisualStyleBackColor = false;
+            this.refresh.Click += new System.EventHandler(this.refresh_Click);
+            // 
             // Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(17F, 34F);
@@ -330,7 +377,9 @@ namespace RGB_Crustacean
             this.MaximizeBox = false;
             this.Name = "Form";
             this.Text = "RGB Crustacean";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_FormClosing);
             this.Click += new System.EventHandler(this.Form1_Click);
+            this.MouseHover += new System.EventHandler(this.Form_MouseHover);
             this.BottomPanel.ResumeLayout(false);
             this.BottomPanel.PerformLayout();
             this.contextMenuStrip.ResumeLayout(false);
@@ -365,6 +414,9 @@ namespace RGB_Crustacean
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem resetGradientToolStripMenuItem;
         private System.Windows.Forms.FolderBrowserDialog dataPath;
+        private System.Windows.Forms.Button browseData;
+        private System.Windows.Forms.Label dataPathText;
+        private System.Windows.Forms.Button refresh;
     }
 }
 

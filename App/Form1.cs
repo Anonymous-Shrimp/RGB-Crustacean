@@ -23,16 +23,21 @@ using System.IO;
 using System.Drawing.Drawing2D;
 using System.Net.Http.Headers;
 using System.Diagnostics;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.CompilerServices;
 
 namespace RGB_Crustacean
 {
+
     public partial class Form : System.Windows.Forms.Form
     {
         String[] ports;
         public Device[] devices = { new Device(), new Device(), new Device() };
         public FolderBrowserDialog fbd;
+        public BinaryFormatter formatter = new BinaryFormatter();
         public Gradient palettes;
+        public Label errortext;
         public Form()
         {
             InitializeComponent();
@@ -40,7 +45,10 @@ namespace RGB_Crustacean
 
             fbd = dataPath;
 
+            errortext = errorText;
             errorText.Text = "";
+            dataPathText.Text = "";
+
             devices[0].button = serialButton1;
             devices[1].button = serialButton2;
             devices[2].button = serialButton3;
@@ -89,6 +97,7 @@ namespace RGB_Crustacean
             GradientBox.Paint += new PaintEventHandler(this.GradientBox_Paint);
             palettes = new Gradient();
             this.Controls.Add(GradientBox);
+            
 
         }
 
@@ -172,7 +181,7 @@ namespace RGB_Crustacean
 
         private void serial1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            
         }
 
         private void serial2_SelectedIndexChanged(object sender, EventArgs e)
@@ -274,7 +283,7 @@ namespace RGB_Crustacean
 
         private void Form1_Click(object sender, EventArgs e)
         {
-
+            
 
             serialText1.Visible = false;
             serialText2.Visible = false;
@@ -307,6 +316,10 @@ namespace RGB_Crustacean
         void updateColorPage()
         {
             this.Refresh();
+            if (dataPath.SelectedPath != null)
+            {
+                SavePlayer();
+            }
             r.Value = palettes.color[0].R;
             g.Value = palettes.color[0].G;
             b.Value = palettes.color[0].B;
@@ -352,9 +365,42 @@ namespace RGB_Crustacean
 
             palettes = data.palettes;
             devices = device.devices;
+            fbd.SelectedPath = device.dataPath;
+        }
+
+        private void browseData_Click(object sender, EventArgs e)
+        {
+            dataPath.ShowDialog();
+        }
+
+        private void Form_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            
+            if(dataPath.SelectedPath != null)
+            {
+                SavePlayer();
+            }
+        }
+
+        private void Form_MouseHover(object sender, EventArgs e)
+        {
+            dataPathText.TextAlign = ContentAlignment.MiddleCenter;
+            if (dataPath.SelectedPath != null)
+            {
+                dataPathText.Text = "Path set to: " + fbd.SelectedPath.ToString();
+            }
+        }
+
+        private void refresh_Click(object sender, EventArgs e)
+        {
+            if (dataPath.SelectedPath != null)
+            {
+                LoadPlayer();
+                updateColorPage();
+            }
         }
     }
-
+    [Serializable]
     public class Gradient
     {
         public string name = "MyGradient";
@@ -363,6 +409,7 @@ namespace RGB_Crustacean
 
         
     }
+    [Serializable]
     public class Device
     {
         public string name;
@@ -378,26 +425,38 @@ public static class SaveSystem
     {
         public static void SavePlayer(Form save)
         {
-            BinaryFormatter formatter = new BinaryFormatter();
+
 
             
-            string path = save.fbd.SelectedPath + "/RGBCrustacean.col";
+            string path = save.fbd.SelectedPath + "/RGBCrustaceanGradient.col";
             FileStream stream = new FileStream(path, FileMode.Create);
 
             SaveData data = new SaveData(save);
-
-            formatter.Serialize(stream, data);
-            stream.Close();
+            try
+            {
+                save.formatter.Serialize(stream, data);
+            }catch(Exception e)
+            {
+                Console.WriteLine("Failed to serialize. Reason: " + e.Message);
+                save.errortext.Text = "Error Saving File";
+            }
+            finally
+            {
+                stream.Close();
+            }
+            
         }
         public static SaveData LoadPlayer(Form save)
         {
-            string path = save.fbd.SelectedPath + "/RGBCrustacean.col";
+            string path = save.fbd.SelectedPath + "/RGBCrustaceanGradient.col";
             if (File.Exists(path))
             {
-                BinaryFormatter formatter = new BinaryFormatter();
+                
                 FileStream stream = new FileStream(path, FileMode.Open);
 
-                SaveData data = formatter.Deserialize(stream) as SaveData;
+
+
+                SaveData data = save.formatter.Deserialize(stream) as SaveData;
 
                 stream.Close();
 
@@ -408,33 +467,49 @@ public static class SaveSystem
             else
             {
                 Console.WriteLine("Save File not found in " + path);
+                save.errortext.Text = "Save File not found in " + path;
                 return null;
             }
         }
     }
+
     public static class SaveDeviceSystem
     {
         public static void SavePlayer(Form save)
         {
-            BinaryFormatter formatter = new BinaryFormatter();
+            
 
-            string path = save.fbd.SelectedPath + "/RGBCrustacean.col";
+            string path = save.fbd.SelectedPath + "/devices.lol";
             FileStream stream = new FileStream(path, FileMode.Create);
 
             SaveDevice data = new SaveDevice(save);
 
-            formatter.Serialize(stream, data);
-            stream.Close();
+            try
+            {
+                save.formatter.Serialize(stream, data);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Failed to serialize. Reason: " + e.Message);
+                save.errortext.Text = "Error Saving File";
+            }
+            finally
+            {
+                stream.Close();
+            }
         }
+        
         public static SaveDevice LoadPlayer(Form save)
         {
-            string path = save.fbd.SelectedPath + "/RGBCrustacean.col";
+            string path = save.fbd.SelectedPath + "/devices.lol";
             if (File.Exists(path))
             {
-                BinaryFormatter formatter = new BinaryFormatter();
+                
                 FileStream stream = new FileStream(path, FileMode.Open);
 
-                SaveDevice data = formatter.Deserialize(stream) as SaveDevice;
+                stream.Position = 0;
+
+                SaveDevice data = save.formatter.Deserialize(stream) as SaveDevice;
 
                 stream.Close();
 
@@ -445,15 +520,16 @@ public static class SaveSystem
             else
             {
                 Console.WriteLine("Save File not found in " + path);
+                save.errortext.Text = "Save File not found in " + path;
                 return null;
             }
         }
     }
+    [Serializable]
     public class SaveData
     {
 
         public Gradient palettes;
-        public Device[] devices;
 
         public SaveData(Form save)
         {
@@ -461,15 +537,17 @@ public static class SaveSystem
         }
 
     }
+    [System.Serializable]
     public class SaveDevice
     {
 
-        public Gradient palettes;
         public Device[] devices;
+        public string dataPath;
 
         public SaveDevice(Form save)
         {
             devices = save.devices;
+            dataPath = save.fbd.SelectedPath;
         }
 
     }
