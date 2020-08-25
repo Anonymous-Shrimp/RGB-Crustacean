@@ -26,6 +26,7 @@ using System.Diagnostics;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.CompilerServices;
+using RGB_Crustacean.Properties;
 
 namespace RGB_Crustacean
 {
@@ -47,7 +48,15 @@ namespace RGB_Crustacean
 
             errortext = errorText;
             errorText.Text = "";
-            dataPathText.Text = "";
+            if (Settings.Default["pathName"] != null)
+            {
+                dataPathText.Text = "Path set to: " + Settings.Default["pathName"].ToString();
+            }
+            else
+            {
+                dataPathText.Text = "";
+            }
+            
 
             devices[0].button = serialButton1;
             devices[1].button = serialButton2;
@@ -97,7 +106,12 @@ namespace RGB_Crustacean
             GradientBox.Paint += new PaintEventHandler(this.GradientBox_Paint);
             palettes = new Gradient();
             this.Controls.Add(GradientBox);
-            
+            if (dataPath.SelectedPath != null)
+            {
+                LoadPlayer();
+                updateColorPage();
+            }
+
 
         }
 
@@ -227,15 +241,22 @@ namespace RGB_Crustacean
         {
             if (!devices[2].isConnected)
             {
-                connectToArduino(0);
+                connectToArduino(2);
             }
             else
             {
-                disconnectFromArduino(0);
+                disconnectFromArduino(2);
             }
         }
         private void serialLabel1_Click(object sender, EventArgs e)
         {
+            serialText1.Visible = false;
+            serialText2.Visible = false;
+            serialText3.Visible = false;
+
+            serialLabel1.Visible = true;
+            serialLabel2.Visible = true;
+            serialLabel3.Visible = true;
             serialText1.Visible = true;
             serialLabel1.Visible = false;
             serialText1.Text = serialLabel1.Text;
@@ -243,6 +264,13 @@ namespace RGB_Crustacean
 
         private void serialLabel2_Click(object sender, EventArgs e)
         {
+            serialText1.Visible = false;
+            serialText2.Visible = false;
+            serialText3.Visible = false;
+
+            serialLabel1.Visible = true;
+            serialLabel2.Visible = true;
+            serialLabel3.Visible = true;
             serialText2.Visible = true;
             serialLabel2.Visible = false;
             serialText2.Text = serialLabel2.Text;
@@ -250,6 +278,13 @@ namespace RGB_Crustacean
         
         private void serialLabel3_Click(object sender, EventArgs e)
         {
+            serialText1.Visible = false;
+            serialText2.Visible = false;
+            serialText3.Visible = false;
+
+            serialLabel1.Visible = true;
+            serialLabel2.Visible = true;
+            serialLabel3.Visible = true;
             serialText3.Visible = true;
             serialLabel3.Visible = false;
             serialText3.Text = serialLabel3.Text;
@@ -315,7 +350,7 @@ namespace RGB_Crustacean
 
         void updateColorPage()
         {
-            this.Refresh();
+            GradientBox.Refresh();
             if (dataPath.SelectedPath != null)
             {
                 SavePlayer();
@@ -356,16 +391,15 @@ namespace RGB_Crustacean
         public void SavePlayer()
         {
             SaveSystem.SavePlayer(this);
-            SaveDeviceSystem.SavePlayer(this);
+            Settings.Default["pathName"] = dataPath.SelectedPath;
+            
         }
         public void LoadPlayer()
         {
             SaveData data = SaveSystem.LoadPlayer(this);
-            SaveDevice device = SaveDeviceSystem.LoadPlayer(this);
-
             palettes = data.palettes;
-            devices = device.devices;
-            fbd.SelectedPath = device.dataPath;
+            fbd.SelectedPath = Settings.Default["pathName"].ToString();
+            updateColorPage();
         }
 
         private void browseData_Click(object sender, EventArgs e)
@@ -387,7 +421,7 @@ namespace RGB_Crustacean
             dataPathText.TextAlign = ContentAlignment.MiddleCenter;
             if (dataPath.SelectedPath != null)
             {
-                dataPathText.Text = "Path set to: " + fbd.SelectedPath.ToString();
+                dataPathText.Text = "Path set to: " + Settings.Default["pathName"].ToString();
             }
         }
 
@@ -397,6 +431,15 @@ namespace RGB_Crustacean
             {
                 LoadPlayer();
                 updateColorPage();
+                dataPathText.Text = "Path set to: " + Settings.Default["pathName"].ToString();
+            }
+        }
+
+        private void BottomPanel_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (dataPath.SelectedPath != null)
+            {
+                dataPathText.Text = "Path set to: " + Settings.Default["pathName"].ToString();
             }
         }
     }
@@ -472,59 +515,9 @@ public static class SaveSystem
             }
         }
     }
+    
+    
 
-    public static class SaveDeviceSystem
-    {
-        public static void SavePlayer(Form save)
-        {
-            
-
-            string path = save.fbd.SelectedPath + "/devices.lol";
-            FileStream stream = new FileStream(path, FileMode.Create);
-
-            SaveDevice data = new SaveDevice(save);
-
-            try
-            {
-                save.formatter.Serialize(stream, data);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Failed to serialize. Reason: " + e.Message);
-                save.errortext.Text = "Error Saving File";
-            }
-            finally
-            {
-                stream.Close();
-            }
-        }
-        
-        public static SaveDevice LoadPlayer(Form save)
-        {
-            string path = save.fbd.SelectedPath + "/devices.lol";
-            if (File.Exists(path))
-            {
-                
-                FileStream stream = new FileStream(path, FileMode.Open);
-
-                stream.Position = 0;
-
-                SaveDevice data = save.formatter.Deserialize(stream) as SaveDevice;
-
-                stream.Close();
-
-                Console.WriteLine("Loaded File From " + path);
-
-                return data;
-            }
-            else
-            {
-                Console.WriteLine("Save File not found in " + path);
-                save.errortext.Text = "Save File not found in " + path;
-                return null;
-            }
-        }
-    }
     [Serializable]
     public class SaveData
     {
@@ -537,19 +530,6 @@ public static class SaveSystem
         }
 
     }
-    [System.Serializable]
-    public class SaveDevice
-    {
 
-        public Device[] devices;
-        public string dataPath;
-
-        public SaveDevice(Form save)
-        {
-            devices = save.devices;
-            dataPath = save.fbd.SelectedPath;
-        }
-
-    }
 }
 

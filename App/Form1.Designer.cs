@@ -39,6 +39,7 @@ namespace RGB_Crustacean
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form));
             this.BottomPanel = new System.Windows.Forms.Panel();
+            this.refresh = new System.Windows.Forms.Button();
             this.dataPathText = new System.Windows.Forms.Label();
             this.browseData = new System.Windows.Forms.Button();
             this.serialButton3 = new System.Windows.Forms.Button();
@@ -62,7 +63,6 @@ namespace RGB_Crustacean
             this.g = new System.Windows.Forms.TrackBar();
             this.b = new System.Windows.Forms.TrackBar();
             this.dataPath = new System.Windows.Forms.FolderBrowserDialog();
-            this.refresh = new System.Windows.Forms.Button();
             this.BottomPanel.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.r)).BeginInit();
@@ -94,6 +94,19 @@ namespace RGB_Crustacean
             this.BottomPanel.Name = "BottomPanel";
             this.BottomPanel.Size = new System.Drawing.Size(800, 148);
             this.BottomPanel.TabIndex = 1;
+            this.BottomPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.BottomPanel_MouseMove);
+            // 
+            // refresh
+            // 
+            this.refresh.BackColor = System.Drawing.Color.Transparent;
+            this.refresh.Font = new System.Drawing.Font("Ubuntu", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.refresh.Location = new System.Drawing.Point(614, 17);
+            this.refresh.Name = "refresh";
+            this.refresh.Size = new System.Drawing.Size(124, 29);
+            this.refresh.TabIndex = 16;
+            this.refresh.Text = "Refresh";
+            this.refresh.UseVisualStyleBackColor = false;
+            this.refresh.Click += new System.EventHandler(this.refresh_Click);
             // 
             // dataPathText
             // 
@@ -346,18 +359,6 @@ namespace RGB_Crustacean
             // dataPath
             // 
             this.dataPath.Description = "The folder in which the device and gradient data is stored";
-            // 
-            // refresh
-            // 
-            this.refresh.BackColor = System.Drawing.Color.Transparent;
-            this.refresh.Font = new System.Drawing.Font("Ubuntu", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.refresh.Location = new System.Drawing.Point(614, 17);
-            this.refresh.Name = "refresh";
-            this.refresh.Size = new System.Drawing.Size(124, 29);
-            this.refresh.TabIndex = 16;
-            this.refresh.Text = "Refresh";
-            this.refresh.UseVisualStyleBackColor = false;
-            this.refresh.Click += new System.EventHandler(this.refresh_Click);
             // 
             // Form
             // 
