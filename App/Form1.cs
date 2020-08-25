@@ -33,8 +33,8 @@ namespace RGB_Crustacean
 
         PaintEventArgs draw;
 
-        List<Gradient> palettes;
-        Gradient[] startPalettes = new Gradient[] { new Gradient() };
+       Gradient palettes;
+        Gradient startPalettes;
 
         int index = 0;
 
@@ -42,11 +42,6 @@ namespace RGB_Crustacean
         {
             InitializeComponent();
             getAvailableComPorts();
-
-            if(palettes == null)
-            {
-                palettes = startPalettes.ToList();
-            }
 
             errorText.Text = "";
 
@@ -82,16 +77,6 @@ namespace RGB_Crustacean
             serialLabel2.Text = "Device2";
             serialLabel3.Text = "Device3";
 
-            gradientName.Visible = true;
-            gradientText.Visible = false;
-
-            gradientName.Text = palettes[index].name;
-
-            foreach (Gradient g in palettes)
-            {
-                gradientList.Items.Add(g.name);
-            }
-
             foreach (string port in ports)
             {
                 serial1.Items.Add(port);
@@ -105,8 +90,8 @@ namespace RGB_Crustacean
                     serial3.SelectedItem = ports[0];
                 }
             }
-            updateList();
             GradientBox.Paint += new PaintEventHandler(this.GradientBox_Paint);
+            palettes = new Gradient();
             this.Controls.Add(GradientBox);
 
         }
@@ -298,12 +283,10 @@ namespace RGB_Crustacean
             serialText1.Visible = false;
             serialText2.Visible = false;
             serialText3.Visible = false;
-            gradientText.Visible = false;
 
             serialLabel1.Visible = true;
             serialLabel2.Visible = true;
             serialLabel3.Visible = true;
-            gradientName.Visible = true;
         }
 
         private void GradientBox_Paint(object sender, PaintEventArgs e)
@@ -313,13 +296,11 @@ namespace RGB_Crustacean
             ColorBlend cb = new ColorBlend();
             try
             {
-                cb.Positions = palettes[gradientList.SelectedIndex].pos;
-                cb.Colors = palettes[gradientList.SelectedIndex].color;
+                cb.Positions = palettes.pos;
+                cb.Colors = palettes.color;
             }
             catch
             {
-                cb.Positions = palettes[0].pos;
-                cb.Colors = palettes[0].color;
                 Console.WriteLine("Error Drawing Gradient");
             }
             br.InterpolationColors = cb;
@@ -330,127 +311,39 @@ namespace RGB_Crustacean
 
         void updateColorPage()
         {
-            /*
-            LinearGradientBrush br = new LinearGradientBrush(GradientBox.DisplayRectangle, Color.Black, Color.Black, 0, false);
-            ColorBlend cb = new ColorBlend();
-            try
-            {
-                cb.Positions = palettes[gradientList.SelectedIndex].pos;
-                cb.Colors = palettes[gradientList.SelectedIndex].color;
-            }
-            catch
-            {
-                cb.Positions = palettes[0].pos;
-                cb.Colors = palettes[0].color;
-                Console.WriteLine("Error Drawing Gradient");
-            }
-            br.InterpolationColors = cb;
-            br.RotateTransform(0);
-            draw.Graphics.FillRectangle(br, GradientBox.DisplayRectangle);
-            */
-
-            r.Value = palettes[index].color[0].R;
-            g.Value = palettes[index].color[0].G;
-            b.Value = palettes[index].color[0].B;
-            gradientName.Text = palettes[index].name;
-        }
-
-        private void gradientList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (gradientText.Visible)
-            {
-                gradientText.Visible = false;
-                gradientName.Visible = true;
-                gradientName.Text = gradientText.Text;
-                palettes[index].name = gradientText.Text;
-            }
-            index = gradientList.SelectedIndex;
-            updateColorPage();
-            updateList();
-        }
-
-        private void AddGradient_Click(object sender, EventArgs e)
-        {
-            palettes.Add(new Gradient());
-            updateList();
-            gradientList.SelectedIndex = palettes.Count - 1;
-        }
-        void updateList()
-        {
-            object i = gradientList.SelectedItem;
-
-            gradientList.Items.Clear();
-
-            foreach(Gradient g in palettes)
-            {
-                gradientList.Items.Add(g.name);
-            }
-            gradientList.SelectedItem = i;
-            
-
-        }
-
-
-       
-
-        private void deleteList_Click(object sender, EventArgs e)
-        {
-            palettes.RemoveAt(gradientList.SelectedIndex);
-            gradientList.SelectedIndex = 0;
-            updateList();
-        }
-
-        private void duplicateList_Click(object sender, EventArgs e)
-        {
-            palettes.Add(palettes[gradientList.SelectedIndex]);
-            
-            updateList();
-            gradientList.SelectedIndex = palettes.Count - 1;
-        }
-
-        private void listContextMenu_Opened(object sender, EventArgs e)
-        {
-            deleteList.Enabled = gradientList.SelectedItem != null;
-            duplicateList.Enabled = gradientList.SelectedItem != null;
-            if (gradientList.Items.Count == 1)
-            {
-                deleteList.Enabled = false;
-            }
-            else
-            {
-                deleteList.Enabled = true;
-            }
-           
-        }
-
-        
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            gradientName.Text = gradientText.Text;
-            palettes[index].name = gradientText.Text;
-            updateList();
-        }
-
-        private void gradientName_Click(object sender, EventArgs e)
-        {
-            gradientText.Visible = true;
-            gradientName.Visible = false;
-            gradientText.Text = gradientName.Text;
+            this.Refresh();
+            r.Value = palettes.color[0].R;
+            g.Value = palettes.color[0].G;
+            b.Value = palettes.color[0].B;
         }
 
         private void r_Scroll(object sender, EventArgs e)
         {
-            palettes[index].color[0] = Color.FromArgb(r.Value, g.Value, b.Value);
+            palettes.color[0] = Color.FromArgb(r.Value, g.Value, b.Value);
+            updateColorPage();
         }
 
         private void g_Scroll(object sender, EventArgs e)
         {
-            palettes[index].color[0] = Color.FromArgb(r.Value, g.Value, b.Value);
+            palettes.color[0] = Color.FromArgb(r.Value, g.Value, b.Value);
+            updateColorPage();
         }
 
         private void b_Scroll(object sender, EventArgs e)
         {
-            palettes[index].color[0] = Color.FromArgb(r.Value, g.Value, b.Value);
+            palettes.color[0] = Color.FromArgb(r.Value, g.Value, b.Value);
+            updateColorPage();
+        }
+
+        private void resetGradientToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            palettes = new Gradient();
+            updateColorPage();
+        }
+
+        private void contextMenuStrip_Opening(object sender, CancelEventArgs e)
+        {
+
         }
     }
 
