@@ -39,6 +39,7 @@ namespace RGB_Crustacean
         public BinaryFormatter formatter = new BinaryFormatter();
         public Gradient palettes;
         public Label errortext;
+        public int currentGradientPointIndex = 0;
         public Form()
         {
             InitializeComponent();
@@ -342,39 +343,67 @@ namespace RGB_Crustacean
             {
                 Console.WriteLine("Error Drawing Gradient");
             }
-            br.InterpolationColors = cb;
-            br.RotateTransform(0);
-            e.Graphics.FillRectangle(br, GradientBox.DisplayRectangle);
+            try
+            {
+                br.InterpolationColors = cb;
+                br.RotateTransform(0);
+                e.Graphics.FillRectangle(br, GradientBox.DisplayRectangle);
+            }
+            catch
+            {
+                Console.WriteLine(palettes.pos);
+            }
 
         }
 
         void updateColorPage()
         {
             GradientBox.Refresh();
+            UpdateList();
             if (dataPath.SelectedPath != null)
             {
                 SavePlayer();
             }
-            r.Value = palettes.color[0].R;
-            g.Value = palettes.color[0].G;
-            b.Value = palettes.color[0].B;
+            UpdateScrollBars();
+            UpdateList();
         }
+        public void UpdateScrollBars()
+        {
+            r.Value = palettes.color[currentGradientPointIndex].R;
+            g.Value = palettes.color[currentGradientPointIndex].G;
+            b.Value = palettes.color[currentGradientPointIndex].B;
+            pos.Value = (int)Math.Round(palettes.pos[currentGradientPointIndex] * 1000);
+            bool isLargest = true;
+            bool isSmallest = true;
+            foreach (float p in palettes.pos)
+            {
+                if(p > palettes.pos[currentGradientPointIndex])
+                {
+                    isLargest = false;
+                }
+                if (p < palettes.pos[currentGradientPointIndex])
+                {
+                    isSmallest = false;
+                }
+            }
+            pos.Enabled = !(isLargest || isSmallest);
 
+        }
         private void r_Scroll(object sender, EventArgs e)
         {
-            palettes.color[0] = Color.FromArgb(r.Value, g.Value, b.Value);
+            palettes.color[currentGradientPointIndex] = Color.FromArgb(r.Value, g.Value, b.Value);
             updateColorPage();
         }
 
         private void g_Scroll(object sender, EventArgs e)
         {
-            palettes.color[0] = Color.FromArgb(r.Value, g.Value, b.Value);
+            palettes.color[currentGradientPointIndex] = Color.FromArgb(r.Value, g.Value, b.Value);
             updateColorPage();
         }
 
         private void b_Scroll(object sender, EventArgs e)
         {
-            palettes.color[0] = Color.FromArgb(r.Value, g.Value, b.Value);
+            palettes.color[currentGradientPointIndex] = Color.FromArgb(r.Value, g.Value, b.Value);
             updateColorPage();
         }
 
@@ -397,7 +426,7 @@ namespace RGB_Crustacean
         public void LoadPlayer()
         {
             SaveData data = SaveSystem.LoadPlayer(this);
-            palettes = data.palettes;
+            //palettes = data.palettes;
             fbd.SelectedPath = Settings.Default["pathName"].ToString();
             updateColorPage();
         }
@@ -442,6 +471,50 @@ namespace RGB_Crustacean
                 dataPathText.Text = "Path set to: " + Settings.Default["pathName"].ToString();
             }
         }
+
+        private void gradientStopList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            currentGradientPointIndex = gradientStopList.SelectedIndex;
+            UpdateScrollBars();
+            UpdateList();
+            
+        }
+        public void UpdateList()
+        {
+            gradientStopList.Items.Clear();
+            for (int i = 0; i < palettes.color.Length; i++)
+            {
+                Color c = palettes.color[i];
+                string RGBtext = c.R.ToString() + ", " + c.G.ToString() + ", " + c.B.ToString() + ", ";
+                string outputText = RGBtext + " at " + palettes.pos[i].ToString();
+                gradientStopList.Items.Add(outputText);
+                
+            }
+        }
+
+        private void pos_Scroll(object sender, EventArgs e)
+        {
+            palettes.pos[currentGradientPointIndex] = pos.Value / 1000;
+            SortColors();
+            updateColorPage();
+        }
+
+        private void addStop_Click(object sender, EventArgs e)
+        {
+            List<Color> currentColors = palettes.color.ToList();
+            List<float> currentPos = palettes.pos.ToList();
+            currentColors.Add(Color.White);
+            currentPos.Add(0.5f);
+            palettes.color = currentColors.ToArray();
+            palettes.pos = currentPos.ToArray();
+            SortColors();
+            updateColorPage();
+        }
+        public void SortColors()
+        {
+            palettes.pos.ToList().Sort();
+        }
+
     }
     [Serializable]
     public class Gradient

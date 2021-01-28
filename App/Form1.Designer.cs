@@ -63,11 +63,19 @@ namespace RGB_Crustacean
             this.g = new System.Windows.Forms.TrackBar();
             this.b = new System.Windows.Forms.TrackBar();
             this.dataPath = new System.Windows.Forms.FolderBrowserDialog();
+            this.gradientStopList = new System.Windows.Forms.ListBox();
+            this.pos = new System.Windows.Forms.TrackBar();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.addStop = new System.Windows.Forms.Button();
             this.BottomPanel.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.r)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.g)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.b)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pos)).BeginInit();
             this.SuspendLayout();
             // 
             // BottomPanel
@@ -116,7 +124,7 @@ namespace RGB_Crustacean
             this.dataPathText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(100)))), ((int)(((byte)(117)))));
             this.dataPathText.Location = new System.Drawing.Point(439, 103);
             this.dataPathText.Name = "dataPathText";
-            this.dataPathText.Size = new System.Drawing.Size(117, 21);
+            this.dataPathText.Size = new System.Drawing.Size(84, 16);
             this.dataPathText.TabIndex = 15;
             this.dataPathText.Text = "dataPathText";
             this.dataPathText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -155,7 +163,7 @@ namespace RGB_Crustacean
             this.serialLabel3.Location = new System.Drawing.Point(36, 87);
             this.serialLabel3.Name = "serialLabel3";
             this.serialLabel3.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.serialLabel3.Size = new System.Drawing.Size(95, 34);
+            this.serialLabel3.Size = new System.Drawing.Size(63, 24);
             this.serialLabel3.TabIndex = 12;
             this.serialLabel3.Text = "label3";
             this.serialLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -172,7 +180,7 @@ namespace RGB_Crustacean
             this.serialLabel1.Location = new System.Drawing.Point(36, 11);
             this.serialLabel1.Name = "serialLabel1";
             this.serialLabel1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.serialLabel1.Size = new System.Drawing.Size(95, 34);
+            this.serialLabel1.Size = new System.Drawing.Size(63, 24);
             this.serialLabel1.TabIndex = 2;
             this.serialLabel1.Text = "label1";
             this.serialLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -188,7 +196,7 @@ namespace RGB_Crustacean
             this.serialLabel2.Location = new System.Drawing.Point(36, 49);
             this.serialLabel2.Name = "serialLabel2";
             this.serialLabel2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.serialLabel2.Size = new System.Drawing.Size(95, 34);
+            this.serialLabel2.Size = new System.Drawing.Size(63, 24);
             this.serialLabel2.TabIndex = 11;
             this.serialLabel2.Text = "label2";
             this.serialLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -223,7 +231,7 @@ namespace RGB_Crustacean
             this.serialText3.Location = new System.Drawing.Point(19, 84);
             this.serialText3.MaxLength = 10;
             this.serialText3.Name = "serialText3";
-            this.serialText3.Size = new System.Drawing.Size(100, 40);
+            this.serialText3.Size = new System.Drawing.Size(100, 29);
             this.serialText3.TabIndex = 7;
             this.serialText3.Text = "Device3";
             this.serialText3.TextChanged += new System.EventHandler(this.serialText3_TextChanged);
@@ -233,7 +241,7 @@ namespace RGB_Crustacean
             this.serialText2.Location = new System.Drawing.Point(19, 46);
             this.serialText2.MaxLength = 10;
             this.serialText2.Name = "serialText2";
-            this.serialText2.Size = new System.Drawing.Size(100, 40);
+            this.serialText2.Size = new System.Drawing.Size(100, 29);
             this.serialText2.TabIndex = 6;
             this.serialText2.Text = "Device2";
             this.serialText2.TextChanged += new System.EventHandler(this.serialText2_TextChanged);
@@ -243,7 +251,7 @@ namespace RGB_Crustacean
             this.serialText1.Location = new System.Drawing.Point(19, 8);
             this.serialText1.MaxLength = 10;
             this.serialText1.Name = "serialText1";
-            this.serialText1.Size = new System.Drawing.Size(100, 40);
+            this.serialText1.Size = new System.Drawing.Size(100, 29);
             this.serialText1.TabIndex = 5;
             this.serialText1.Text = "Device1";
             this.serialText1.TextChanged += new System.EventHandler(this.serialText1_TextChanged);
@@ -255,7 +263,7 @@ namespace RGB_Crustacean
             this.errorText.ForeColor = System.Drawing.Color.Red;
             this.errorText.Location = new System.Drawing.Point(165, 123);
             this.errorText.Name = "errorText";
-            this.errorText.Size = new System.Drawing.Size(58, 21);
+            this.errorText.Size = new System.Drawing.Size(41, 16);
             this.errorText.TabIndex = 4;
             this.errorText.Text = "label2";
             this.errorText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -266,7 +274,7 @@ namespace RGB_Crustacean
             this.serial3.FormattingEnabled = true;
             this.serial3.Location = new System.Drawing.Point(169, 84);
             this.serial3.Name = "serial3";
-            this.serial3.Size = new System.Drawing.Size(121, 42);
+            this.serial3.Size = new System.Drawing.Size(121, 32);
             this.serial3.TabIndex = 2;
             this.serial3.SelectedIndexChanged += new System.EventHandler(this.serial3_SelectedIndexChanged);
             // 
@@ -275,7 +283,7 @@ namespace RGB_Crustacean
             this.serial2.FormattingEnabled = true;
             this.serial2.Location = new System.Drawing.Point(169, 46);
             this.serial2.Name = "serial2";
-            this.serial2.Size = new System.Drawing.Size(121, 42);
+            this.serial2.Size = new System.Drawing.Size(121, 32);
             this.serial2.TabIndex = 1;
             this.serial2.SelectedIndexChanged += new System.EventHandler(this.serial2_SelectedIndexChanged);
             // 
@@ -284,7 +292,7 @@ namespace RGB_Crustacean
             this.serial1.FormattingEnabled = true;
             this.serial1.Location = new System.Drawing.Point(169, 8);
             this.serial1.Name = "serial1";
-            this.serial1.Size = new System.Drawing.Size(121, 42);
+            this.serial1.Size = new System.Drawing.Size(121, 32);
             this.serial1.TabIndex = 0;
             this.serial1.SelectedIndexChanged += new System.EventHandler(this.serial1_SelectedIndexChanged);
             // 
@@ -303,13 +311,13 @@ namespace RGB_Crustacean
             this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.resetGradientToolStripMenuItem});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(199, 36);
+            this.contextMenuStrip.Size = new System.Drawing.Size(151, 26);
             this.contextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip_Opening);
             // 
             // resetGradientToolStripMenuItem
             // 
             this.resetGradientToolStripMenuItem.Name = "resetGradientToolStripMenuItem";
-            this.resetGradientToolStripMenuItem.Size = new System.Drawing.Size(198, 32);
+            this.resetGradientToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.resetGradientToolStripMenuItem.Text = "Reset Gradient";
             this.resetGradientToolStripMenuItem.Click += new System.EventHandler(this.resetGradientToolStripMenuItem_Click);
             // 
@@ -325,33 +333,33 @@ namespace RGB_Crustacean
             // 
             // r
             // 
-            this.r.Location = new System.Drawing.Point(641, 118);
+            this.r.Location = new System.Drawing.Point(641, 131);
             this.r.Maximum = 255;
             this.r.Name = "r";
             this.r.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.r.Size = new System.Drawing.Size(69, 174);
+            this.r.Size = new System.Drawing.Size(45, 161);
             this.r.TabIndex = 14;
             this.r.TickFrequency = 5;
             this.r.Scroll += new System.EventHandler(this.r_Scroll);
             // 
             // g
             // 
-            this.g.Location = new System.Drawing.Point(692, 118);
+            this.g.Location = new System.Drawing.Point(692, 131);
             this.g.Maximum = 255;
             this.g.Name = "g";
             this.g.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.g.Size = new System.Drawing.Size(69, 174);
+            this.g.Size = new System.Drawing.Size(45, 161);
             this.g.TabIndex = 15;
             this.g.TickFrequency = 5;
             this.g.Scroll += new System.EventHandler(this.g_Scroll);
             // 
             // b
             // 
-            this.b.Location = new System.Drawing.Point(743, 118);
+            this.b.Location = new System.Drawing.Point(743, 131);
             this.b.Maximum = 255;
             this.b.Name = "b";
             this.b.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.b.Size = new System.Drawing.Size(69, 174);
+            this.b.Size = new System.Drawing.Size(45, 161);
             this.b.TabIndex = 16;
             this.b.TickFrequency = 5;
             this.b.Scroll += new System.EventHandler(this.b_Scroll);
@@ -360,12 +368,107 @@ namespace RGB_Crustacean
             // 
             this.dataPath.Description = "The folder in which the device and gradient data is stored";
             // 
+            // gradientStopList
+            // 
+            this.gradientStopList.FormattingEnabled = true;
+            this.gradientStopList.ItemHeight = 24;
+            this.gradientStopList.Items.AddRange(new object[] {
+            "e",
+            "e"});
+            this.gradientStopList.Location = new System.Drawing.Point(12, 118);
+            this.gradientStopList.Name = "gradientStopList";
+            this.gradientStopList.Size = new System.Drawing.Size(549, 148);
+            this.gradientStopList.TabIndex = 17;
+            this.gradientStopList.SelectedIndexChanged += new System.EventHandler(this.gradientStopList_SelectedIndexChanged);
+            // 
+            // pos
+            // 
+            this.pos.Location = new System.Drawing.Point(590, 131);
+            this.pos.Maximum = 1000;
+            this.pos.Name = "pos";
+            this.pos.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.pos.Size = new System.Drawing.Size(45, 161);
+            this.pos.TabIndex = 0;
+            this.pos.TickFrequency = 100;
+            this.pos.Scroll += new System.EventHandler(this.pos_Scroll);
+            // 
+            // label1
+            // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Ubuntu", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(100)))), ((int)(((byte)(117)))));
+            this.label1.Location = new System.Drawing.Point(587, 118);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(30, 16);
+            this.label1.TabIndex = 17;
+            this.label1.Text = "POS";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Ubuntu", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(100)))), ((int)(((byte)(117)))));
+            this.label2.Location = new System.Drawing.Point(650, 118);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(16, 16);
+            this.label2.TabIndex = 19;
+            this.label2.Text = "R";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Ubuntu", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(100)))), ((int)(((byte)(117)))));
+            this.label3.Location = new System.Drawing.Point(692, 118);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(16, 16);
+            this.label3.TabIndex = 20;
+            this.label3.Text = "G";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label4
+            // 
+            this.label4.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Ubuntu", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(100)))), ((int)(((byte)(117)))));
+            this.label4.Location = new System.Drawing.Point(743, 118);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(16, 16);
+            this.label4.TabIndex = 21;
+            this.label4.Text = "B";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // addStop
+            // 
+            this.addStop.BackColor = System.Drawing.Color.Transparent;
+            this.addStop.Font = new System.Drawing.Font("Ubuntu", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.addStop.Location = new System.Drawing.Point(12, 272);
+            this.addStop.Name = "addStop";
+            this.addStop.Size = new System.Drawing.Size(549, 29);
+            this.addStop.TabIndex = 17;
+            this.addStop.Text = "Add Stop";
+            this.addStop.UseVisualStyleBackColor = false;
+            this.addStop.Click += new System.EventHandler(this.addStop_Click);
+            // 
             // Form
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(17F, 34F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(44)))), ((int)(((byte)(54)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.addStop);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.pos);
+            this.Controls.Add(this.gradientStopList);
             this.Controls.Add(this.b);
             this.Controls.Add(this.g);
             this.Controls.Add(this.r);
@@ -387,6 +490,7 @@ namespace RGB_Crustacean
             ((System.ComponentModel.ISupportInitialize)(this.r)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.g)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.b)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pos)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -418,6 +522,13 @@ namespace RGB_Crustacean
         private System.Windows.Forms.Button browseData;
         private System.Windows.Forms.Label dataPathText;
         private System.Windows.Forms.Button refresh;
+        private System.Windows.Forms.ListBox gradientStopList;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TrackBar pos;
+        private System.Windows.Forms.Button addStop;
     }
 }
 
