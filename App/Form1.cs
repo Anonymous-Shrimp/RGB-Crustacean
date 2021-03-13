@@ -27,6 +27,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.CompilerServices;
 using RGB_Crustacean.Properties;
+using Tulpep.NotificationWindow;
 
 namespace RGB_Crustacean
 {
@@ -462,6 +463,10 @@ namespace RGB_Crustacean
                 updateColorPage();
                 dataPathText.Text = "Path set to: " + Settings.Default["pathName"].ToString();
             }
+            PopupNotifier popup = new PopupNotifier();
+            popup.TitleText = "BE HAPPY";
+            popup.ContentText = "Thank you";
+            popup.Popup();
         }
 
         private void BottomPanel_MouseMove(object sender, MouseEventArgs e)
